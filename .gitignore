@@ -1,0 +1,36 @@
+.git
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# env
+.env
+env
+
+# logs
+*.log
+
+# os x
+.DS_Store
+
+# dependencies
+node_modules
+package-lock.json
+
+# other
+.nuxt
+dist
+.vscode
+.eslintrc
+
+# docs
+/docs
+
+# @nuxtjs/pwa
+sw.*
+
+# Optional eslint cache
+.eslintcache

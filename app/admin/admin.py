@@ -1,0 +1,39 @@
+# -*- encoding: utf-8 -*-
+"""
+License: MIT
+Copyright (c) 2020 -zinken7
+"""
+
+from app.admin import blueprint
+from flask import render_template, redirect, url_for, request, jsonify
+from flask_login import login_required, current_user
+from app import login_manager, db
+from jinja2 import TemplateNotFound
+
+from app.forms import CreateProductForm, CreateCustomerForm
+from app.models import Product, Customer
+
+import collections, psycopg2
+from   decouple import config
+
+## Index dashboard
+@blueprint.route('/')
+def index():
+
+	return render_template('admin/index.html')
+
+## Other pages
+@blueprint.route('/<template>')
+def route_template(template):
+
+    if not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
+
+    try:
+        return render_template('admin/' + template + '.html')
+
+    except TemplateNotFound:
+        return render_template('errors/page_404.html'), 404
+    
+    except:
+        return render_template('errors/page_500.html'), 500

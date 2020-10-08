@@ -1,0 +1,9 @@
+flask
+flask_login
+flask_migrate
+flask_wtf
+email_validator
+flask_sqlalchemy
+python-decouple
+gunicorn
+psycopg2
