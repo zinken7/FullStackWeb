@@ -3,85 +3,20 @@
     <notifications></notifications>
     <side-bar
       :background-color="sidebarBackground"
-      :short-title="$t('sidebar.shortTitle')"
-      :title="$t('sidebar.title')"
+      short-title="CT"
+      title="Creative Tim"
     >
       <template slot-scope="props" slot="links">
         <sidebar-item
           :link="{
             name: $t('sidebar.dashboard'),
             icon: 'tim-icons icon-chart-pie-36',
-            path: '/'
+            path: '/starter-page'
           }"
         >
         </sidebar-item>
-        <sidebar-item
-          :link="{
-            name: $t('sidebar.icons'),
-            icon: 'tim-icons icon-atom',
-            path: '/icons'
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item
-          :link="{
-            name: $t('sidebar.maps'),
-            icon: 'tim-icons icon-pin',
-            path: '/google'
-          }"
-        >
-        </sidebar-item>
-
-        <sidebar-item
-          :link="{
-            name: $t('sidebar.notifications'),
-            icon: 'tim-icons icon-bell-55',
-            path: '/notifications'
-          }"
-        >
-        </sidebar-item>
-
-        <sidebar-item
-          :link="{
-            name: $t('sidebar.userProfile'),
-            icon: 'tim-icons icon-single-02',
-            path: '/user' }"
-        >
-        </sidebar-item>
-
-        <sidebar-item
-          :link="{
-            name: $t('sidebar.regularTables'),
-            icon: 'tim-icons icon-puzzle-10',
-            path: '/regular'
-          }"
-        ></sidebar-item>
-
-        <sidebar-item
-          :link="{
-            name: $t('sidebar.typography'),
-            icon: 'tim-icons icon-align-center',
-            path: '/typography'
-          }"
-        ></sidebar-item>
-
-        <sidebar-item
-          :link="{
-            name: $t('sidebar.rtl'),
-            icon: 'tim-icons icon-world',
-            path: localePath('/rtl', 'ar') }"
-        ></sidebar-item>
-
-        <li class="active-pro">
-          <a href="https://www.creative-tim.com/product/nuxt-black-dashboard-pro" target="_blank">
-            <i class="tim-icons icon-spaceship"></i>
-            <p>Upgrade to PRO</p>
-          </a>
-        </li>
       </template>
     </side-bar>
-    <!--Share plugin (for demo purposes). You can remove it if don't plan on using it-->
-    <sidebar-share :background-color.sync="sidebarBackground"> </sidebar-share>
     <div class="main-panel" :data="sidebarBackground">
       <dashboard-navbar></dashboard-navbar>
       <router-view name="header"></router-view>
@@ -92,7 +27,7 @@
       >
         <zoom-center-transition :duration="200" mode="out-in">
           <!-- your content here -->
-          <nuxt></nuxt>
+          <router-view></router-view>
         </zoom-center-transition>
       </div>
       <content-footer v-if="!isFullScreenRoute"></content-footer>
@@ -103,7 +38,7 @@
   /* eslint-disable no-new */
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
-  import SidebarShare from '@/components/Layout/SidebarSharePlugin';
+
   function hasElement(className) {
     return document.getElementsByClassName(className).length > 0;
   }
@@ -119,8 +54,8 @@
     }
   }
 
-  import DashboardNavbar from '@/components/Layout/DashboardNavbar.vue';
-  import ContentFooter from '@/components/Layout/ContentFooter.vue';
+  import DashboardNavbar from '@/components/Layout/starter/SampleNavbar.vue';
+  import ContentFooter from '@/components/Layout/starter/SampleFooter.vue';
   import DashboardContent from '@/components/Layout/Content.vue';
   import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
 
@@ -130,8 +65,7 @@
       ContentFooter,
       DashboardContent,
       SlideYDownTransition,
-      ZoomCenterTransition,
-      SidebarShare
+      ZoomCenterTransition
     },
     data() {
       return {
