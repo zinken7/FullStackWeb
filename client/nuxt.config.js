@@ -23,16 +23,8 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    [
-      '@nuxtjs/router',
-      {
-        subDomains: ['dashboard'], // List of directories to hold the subdomains pages
-        rootDomain: 'home', //  directory to hold the pages for root domain
-        path: 'router',
-        fileName: 'index.js',
-        keepDefaultRouter: true,
-      },
-    ],
+    // https://go.nuxtjs.dev/stylelint
+    '@nuxtjs/stylelint-module',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -44,20 +36,7 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {
-    proxy: true,
-  },
-
-  proxy: {
-    '/api/': 'http://127.0.0.1:5000/',
-  },
-
-  // Pwa module configuration (https://pwa.nuxtjs.org/icon/)
-  pwa: {
-    icon: {
-      purpose: 'maskable',
-    },
-  },
+  axios: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
