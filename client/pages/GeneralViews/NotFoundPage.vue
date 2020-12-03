@@ -9,8 +9,8 @@
 
 <script>
 export default {
-  layout: 'auth'
-};
+  layout: 'auth',
+}
 </script>
 <style lang="scss">
 .not-found-page {

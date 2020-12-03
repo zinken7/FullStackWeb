@@ -154,7 +154,7 @@
 </template>
 <script>
 export default {
-  name: 'typography'
-};
+  name: 'Typography',
+}
 </script>
 <style></style>

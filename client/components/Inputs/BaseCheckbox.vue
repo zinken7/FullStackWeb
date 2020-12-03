@@ -3,10 +3,10 @@
     <label :for="cbId" class="form-check-label">
       <input
         :id="cbId"
+        v-model="model"
         class="form-check-input"
         type="checkbox"
         :disabled="disabled"
-        v-model="model"
       />
       <span class="form-check-sign"></span>
       <slot> <span v-if="inline">&nbsp;</span> </slot>
@@ -15,44 +15,46 @@
 </template>
 <script>
 export default {
-  name: 'base-checkbox',
+  name: 'BaseCheckbox',
   model: {
-    prop: 'checked'
+    prop: 'checked',
   },
   props: {
-    checked: [Array, Boolean],
+    checked: {
+      type: [Array, Boolean],
+      default: true,
+    },
     disabled: Boolean,
     inline: Boolean,
-    hasError: Boolean
+    hasError: Boolean,
   },
   data() {
     return {
       cbId: '',
-      touched: false
-    };
+      touched: false,
+    }
   },
   computed: {
     model: {
       get() {
-        return this.checked;
+        return this.checked
       },
       set(check) {
         if (!this.touched) {
-          this.touched = true;
+          this.touched = true
         }
-        this.$emit('input', check);
-      }
+        this.$emit('input', check)
+      },
     },
     inlineClass() {
       if (this.inline) {
-        return `form-check-inline`;
+        return 'form-check-inline'
       }
-    }
+      return ''
+    },
   },
   mounted() {
-    this.cbId = Math.random()
-      .toString(16)
-      .slice(2);
-  }
-};
+    this.cbId = Math.random().toString(16).slice(2)
+  },
+}
 </script>

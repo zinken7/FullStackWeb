@@ -3,9 +3,9 @@
     <transition-group :name="transitionName" :mode="transitionMode">
       <notification
         v-for="notification in notifications"
-        v-bind="notification"
-        :clickHandler="notification.onClick"
         :key="notification.timestamp.getTime()"
+        v-bind="notification"
+        :click-handler="notification.onClick"
         @close="removeNotification"
       >
       </notification>
@@ -13,45 +13,45 @@
   </div>
 </template>
 <script>
-import Notification from './Notification.vue';
+import Notification from './Notification.vue'
 
 export default {
   components: {
-    Notification
+    Notification,
   },
   props: {
     transitionName: {
       type: String,
-      default: 'list'
+      default: 'list',
     },
     transitionMode: {
       type: String,
-      default: 'in-out'
+      default: 'in-out',
     },
     overlap: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      notifications: this.$notifications.state
-    };
+      notifications: this.$notifications.state,
+    }
+  },
+  watch: {
+    overlap(newVal) {
+      this.$notifications.settings.overlap = newVal
+    },
+  },
+  created() {
+    this.$notifications.settings.overlap = this.overlap
   },
   methods: {
     removeNotification(timestamp) {
-      this.$notifications.removeNotification(timestamp);
-    }
+      this.$notifications.removeNotification(timestamp)
+    },
   },
-  created() {
-    this.$notifications.settings.overlap = this.overlap;
-  },
-  watch: {
-    overlap: function(newVal) {
-      this.$notifications.settings.overlap = newVal;
-    }
-  }
-};
+}
 </script>
 <style lang="scss">
 .notifications {

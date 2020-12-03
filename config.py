@@ -33,6 +33,7 @@ class ProductionConfig(Config):
 
 class DebugConfig(Config):
     DEBUG = True
+    SERVER_NAME = 'localhost'
 
     # PostgreSQL database
     SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(

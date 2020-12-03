@@ -140,36 +140,36 @@
   </div>
 </template>
 <script>
-import { BaseAlert } from '@/components';
+import { BaseAlert } from '@/components'
 
 export default {
-  name: 'notifications',
+  name: 'Notifications',
   components: {
-    BaseAlert
+    BaseAlert,
   },
   data() {
     return {
       type: ['', 'info', 'success', 'warning', 'danger'],
       notifications: {
-        topCenter: false
+        topCenter: false,
       },
-    };
+    }
   },
   methods: {
     notifyVue(verticalAlign, horizontalAlign) {
-      let color = Math.floor(Math.random() * 4 + 1);
+      const color = Math.floor(Math.random() * 4 + 1)
       this.$notify({
         message:
           'Welcome to <b>Vue Black Dashboard Pro</b> - a beautiful resource for every web developer',
         timeout: 30000,
         icon: 'tim-icons icon-bell-55',
-        horizontalAlign: horizontalAlign,
-        verticalAlign: verticalAlign,
-        type: this.type[color]
-      });
-    }
-  }
-};
+        horizontalAlign,
+        verticalAlign,
+        type: this.type[color],
+      })
+    },
+  },
+}
 </script>
 <style>
 .card .alert {

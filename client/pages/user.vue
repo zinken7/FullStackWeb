@@ -5,15 +5,15 @@
   </div>
 </template>
 <script>
-import EditProfileForm from '../components/UserProfile/EditProfileForm.vue';
-import UserCard from '../components/UserProfile/UserCard.vue';
+import EditProfileForm from '../components/UserProfile/EditProfileForm.vue'
+import UserCard from '../components/UserProfile/UserCard.vue'
 
 export default {
-  name: 'user',
+  name: 'User',
   components: {
     EditProfileForm,
-    UserCard
-  }
-};
+    UserCard,
+  },
+}
 </script>
 <style></style>

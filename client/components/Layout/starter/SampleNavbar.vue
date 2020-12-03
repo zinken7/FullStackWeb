@@ -26,8 +26,8 @@
           <div class="input-group-addon"><i class="tim-icons icon-zoom-split"></i></div>
         -->
         <button
-          class="btn btn-link"
           id="search-button"
+          class="btn btn-link"
           data-toggle="modal"
           data-target="#searchModal"
         >
@@ -36,18 +36,18 @@
         <!-- You can choose types of search input -->
       </div>
       <modal
+        id="searchModal"
         :show.sync="searchModalVisible"
         class="modal-search"
-        id="searchModal"
         :centered="false"
         :show-close="true"
       >
         <input
+          id="inlineFormInputGroup"
           slot="header"
           v-model="searchQuery"
           type="text"
           class="form-control"
-          id="inlineFormInputGroup"
           placeholder="SEARCH"
         />
       </modal>
@@ -59,9 +59,7 @@
         title-classes="nav-link"
         menu-classes="dropdown-navbar"
       >
-        <template
-          slot="title"
-        >
+        <template slot="title">
           <div class="photo"><img src="img/mike.jpg" /></div>
           <b class="caret d-none d-lg-block d-xl-block"></b>
           <p class="d-lg-none">Log out</p>
@@ -81,54 +79,55 @@
   </base-nav>
 </template>
 <script>
-import { CollapseTransition } from 'vue2-transitions';
-import { BaseNav, Modal } from '@/components';
+import { CollapseTransition } from 'vue2-transitions'
+import { BaseNav, Modal } from '@/components'
 
 export default {
   components: {
+    // eslint-disable-next-line vue/no-unused-components
     CollapseTransition,
     BaseNav,
-    Modal
-  },
-  computed: {
-    routeName() {
-      const { path } = this.$route;
-      let parts = path.split('/')
-      return parts.map(p => this.capitalizeFirstLetter(p)).join(' ');
-    },
-    isRTL() {
-      return this.$rtl.isRTL;
-    }
+    Modal,
   },
   data() {
     return {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
-      searchQuery: ''
-    };
+      searchQuery: '',
+    }
+  },
+  computed: {
+    routeName() {
+      const { path } = this.$route
+      const parts = path.split('/')
+      return parts.map((p) => this.capitalizeFirstLetter(p)).join(' ')
+    },
+    isRTL() {
+      return this.$rtl.isRTL
+    },
   },
   methods: {
     capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+      return string.charAt(0).toUpperCase() + string.slice(1)
     },
     toggleNotificationDropDown() {
-      this.activeNotifications = !this.activeNotifications;
+      this.activeNotifications = !this.activeNotifications
     },
     closeDropDown() {
-      this.activeNotifications = false;
+      this.activeNotifications = false
     },
     toggleSidebar() {
-      this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+      this.$sidebar.displaySidebar(!this.$sidebar.showSidebar)
     },
     hideSidebar() {
-      this.$sidebar.displaySidebar(false);
+      this.$sidebar.displaySidebar(false)
     },
     toggleMenu() {
-      this.showMenu = !this.showMenu;
-    }
-  }
-};
+      this.showMenu = !this.showMenu
+    },
+  },
+}
 </script>
 <style scoped>
 .top-navbar {

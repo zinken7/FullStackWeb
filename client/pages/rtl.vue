@@ -17,17 +17,17 @@
                 >
                   <label
                     v-for="(option, index) in bigLineChartCategories"
+                    :id="index"
                     :key="option.name"
                     class="btn btn-sm btn-primary btn-simple"
                     :class="{ active: bigLineChart.activeIndex === index }"
-                    :id="index"
                   >
                     <input
                       type="radio"
-                      @click="initBigChart(index)"
                       name="options"
                       autocomplete="off"
                       :checked="bigLineChart.activeIndex === index"
+                      @click="initBigChart(index)"
                     />
                     <span class="d-none d-sm-block">{{ option.name }}</span>
                     <span class="d-block d-sm-none">
@@ -40,8 +40,8 @@
           </template>
           <div class="chart-area">
             <line-chart
-              style="height: 100%"
               ref="bigChart"
+              style="height: 100%"
               :chart-data="bigLineChart.chartData"
               :gradient-colors="bigLineChart.gradientColors"
               :gradient-stops="bigLineChart.gradientStops"
@@ -57,7 +57,7 @@
           <template slot="header">
             <h5 class="card-category">مجموع الشحنات</h5>
             <h3 class="card-title">
-              <i class="tim-icons icon-bell-55 text-primary "></i> 763,215
+              <i class="tim-icons icon-bell-55 text-primary"></i> 763,215
             </h3>
           </template>
           <div class="chart-area">
@@ -77,7 +77,7 @@
           <template slot="header">
             <h5 class="card-category">المبيعات اليومية</h5>
             <h3 class="card-title">
-              <i class="tim-icons icon-delivery-fast text-info "></i> 3,500€
+              <i class="tim-icons icon-delivery-fast text-info"></i> 3,500€
             </h3>
           </template>
           <div class="chart-area">
@@ -96,7 +96,7 @@
           <template slot="header">
             <h5 class="card-category">المهام المكتملة</h5>
             <h3 class="card-title">
-              <i class="tim-icons icon-send text-success "></i> 12,100K
+              <i class="tim-icons icon-send text-success"></i> 12,100K
             </h3>
           </template>
           <div class="chart-area">
@@ -155,7 +155,9 @@
       </div>
       <div class="col-lg-6">
         <card card-body-classes="table-full-width">
-          <h4 slot="header" class="card-title" :class="{ 'text-right': isRTL }">جدول بسيط</h4>
+          <h4 slot="header" class="card-title" :class="{ 'text-right': isRTL }">
+            جدول بسيط
+          </h4>
           <el-table :data="tableData">
             <el-table-column
               min-width="150"
@@ -196,20 +198,43 @@
   </div>
 </template>
 <script>
-import { BaseTable } from '@/components';
-import LineChart from '@/components/Charts/LineChart';
-import BarChart from '@/components/Charts/BarChart';
-import * as chartConfigs from '@/components/Charts/config';
-import config from '@/config';
-import { Table, TableColumn } from 'element-ui';
+import {
+  BaseTable,
+  // eslint-disable-next-line no-unused-vars
+  BaseSwitch,
+  // eslint-disable-next-line no-unused-vars
+  TimeLine,
+  // eslint-disable-next-line no-unused-vars
+  TimeLineItem,
+  // eslint-disable-next-line no-unused-vars
+  BaseCheckbox,
+} from '@/components'
+import LineChart from '@/components/Charts/LineChart'
+import BarChart from '@/components/Charts/BarChart'
+import * as chartConfigs from '@/components/Charts/config'
+import config from '@/config'
+import { Table, TableColumn } from 'element-ui'
 
-let bigChartData = [
+const bigChartData = [
   [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
   [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
-  [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130]
+  [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130],
 ]
-let bigChartLabels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-let bigChartDatasetOptions = {
+const bigChartLabels = [
+  'JAN',
+  'FEB',
+  'MAR',
+  'APR',
+  'MAY',
+  'JUN',
+  'JUL',
+  'AUG',
+  'SEP',
+  'OCT',
+  'NOV',
+  'DEC',
+]
+const bigChartDatasetOptions = {
   fill: true,
   borderColor: config.colors.primary,
   borderWidth: 2,
@@ -224,21 +249,14 @@ let bigChartDatasetOptions = {
   pointRadius: 4,
 }
 
-import {
-  BaseSwitch,
-  TimeLine,
-  TimeLineItem,
-  BaseCheckbox
-} from '@/components';
-
 export default {
-  name: 'rtl',
+  name: 'Rtl',
   components: {
     BaseTable,
     LineChart,
     BarChart,
     [Table.name]: Table,
-    [TableColumn.name]: TableColumn
+    [TableColumn.name]: TableColumn,
   },
   data() {
     return {
@@ -247,51 +265,55 @@ export default {
       bigLineChart: {
         activeIndex: 0,
         chartData: {
-          datasets: [{
-            ...bigChartDatasetOptions,
-            data: bigChartData[0]
-          }],
-          labels: bigChartLabels
+          datasets: [
+            {
+              ...bigChartDatasetOptions,
+              data: bigChartData[0],
+            },
+          ],
+          labels: bigChartLabels,
         },
         extraOptions: chartConfigs.purpleChartOptions,
         gradientColors: config.colors.primaryGradient,
         gradientStops: [1, 0.4, 0],
-        categories: []
+        categories: [],
       },
       tableDataTask: [
         {
           title: 'مركز معالجة موقع محور',
           description: 'نص آخر هناالوثائق',
-          done: false
+          done: false,
         },
         {
           title: 'لامتثال GDPR',
           description:
             'الناتج المحلي الإجمالي هو نظام يتطلب من الشركات حماية البيانات الشخصية والخصوصية لمواطني أوروبا بالنسبة للمعاملات التي تتم داخل الدول الأعضاء في الاتحاد الأوروبي.',
-          done: true
+          done: true,
         },
         {
           title: 'القضاياالقضايا',
           description:
             'سيكونونقال 50٪ من جميع المستجيبين أنهم سيكونون أكثر عرضة للتسوق في شركة',
-          done: false
+          done: false,
         },
         {
           title: 'تصدير الملفات التي تمت معالجتها',
-          description: 'كما يبين التقرير أن المستهلكين لن يغفروا شركة بسهولة بمجرد حدوث خرق يعرض بياناتهم الشخصية.',
-          done: false
+          description:
+            'كما يبين التقرير أن المستهلكين لن يغفروا شركة بسهولة بمجرد حدوث خرق يعرض بياناتهم الشخصية.',
+          done: false,
         },
         {
           title: 'الوصول إلى عملية التصدير',
           description:
             'سياسة السيء إنطلاق في قبل, مساعدة والمانيا أخذ قد. بل أما أمام ماشاء الشتاء،, تكاليف الإقتصادي بـ حين. ٣٠ يتعلّق للإتحاد ولم, وتم هناك مدينة بتحدّي إذ, كان بل عمل',
-          done: false
+          done: false,
         },
         {
           title: 'الافراج عن v2.0.0',
-          description: 'عن رئيس طوكيو البولندي لمّ, مايو مرجع وباءت قبل هو, تسمّى الطريق الإقتصادي ذات أن. لغات الإطلاق الفرنسية دار ان, بين بتخصيص الساحة اقتصادية أم. و الآخ',
-          done: false
-        }
+          description:
+            'عن رئيس طوكيو البولندي لمّ, مايو مرجع وباءت قبل هو, تسمّى الطريق الإقتصادي ذات أن. لغات الإطلاق الفرنسية دار ان, بين بتخصيص الساحة اقتصادية أم. و الآخ',
+          done: false,
+        },
       ],
       tableData: [
         {
@@ -299,36 +321,36 @@ export default {
           name: 'رايس داكوتا	',
           salary: '$36.738',
           country: 'النيجر	',
-          city: 'العود-تورنهاوت	'
+          city: 'العود-تورنهاوت	',
         },
         {
           id: 2,
           name: 'مينيرفا هوبر	',
           salary: '$23,789',
           country: 'كوراساو',
-          city: 'Sinaai-واس	'
+          city: 'Sinaai-واس	',
         },
         {
           id: 3,
           name: 'سيج رودريجيز	',
           salary: '$56,142',
           country: 'هولندا',
-          city: 'بايلي'
+          city: 'بايلي',
         },
         {
           id: 4,
           name: 'فيليب شانيه	',
           salary: '$38,735',
           country: 'كوريا، جنوب	',
-          city: 'اوفرلاند بارك	'
+          city: 'اوفرلاند بارك	',
         },
         {
           id: 5,
           name: 'Doris Greene',
           salary: '$63,542',
           country: 'مالاوي	',
-          city: 'المنع	'
-        }
+          city: 'المنع	',
+        },
       ],
       purpleLineChart: {
         extraOptions: chartConfigs.purpleChartOptions,
@@ -349,12 +371,12 @@ export default {
               pointHoverRadius: 4,
               pointHoverBorderWidth: 15,
               pointRadius: 4,
-              data: [80, 100, 70, 80, 120, 80]
-            }
-          ]
+              data: [80, 100, 70, 80, 120, 80],
+            },
+          ],
         },
         gradientColors: config.colors.primaryGradient,
-        gradientStops: [1, 0.2, 0]
+        gradientStops: [1, 0.2, 0],
       },
       greenLineChart: {
         extraOptions: chartConfigs.greenChartOptions,
@@ -375,16 +397,16 @@ export default {
               pointHoverRadius: 4,
               pointHoverBorderWidth: 15,
               pointRadius: 4,
-              data: [90, 27, 60, 12, 80]
-            }
-          ]
+              data: [90, 27, 60, 12, 80],
+            },
+          ],
         },
         gradientColors: [
           'rgba(66,134,121,0.15)',
           'rgba(66,134,121,0.0)',
-          'rgba(66,134,121,0)'
+          'rgba(66,134,121,0)',
         ],
-        gradientStops: [1, 0.4, 0]
+        gradientStops: [1, 0.4, 0],
       },
       blueBarChart: {
         extraOptions: chartConfigs.barChartOptions,
@@ -398,51 +420,57 @@ export default {
               borderWidth: 2,
               borderDash: [],
               borderDashOffset: 0.0,
-              data: [53, 20, 10, 80, 100, 45]
-            }
-          ]
+              data: [53, 20, 10, 80, 100, 45],
+            },
+          ],
         },
         gradientColors: config.colors.primaryGradient,
-        gradientStops: [1, 0.4, 0]
-      }
-    };
-  },
-  methods: {
-    initBigChart (index) {
-      let chartData = {
-        datasets: [{
-          ...bigChartDatasetOptions,
-          data: bigChartData[index]
-        }],
-        labels: bigChartLabels
-      };
-      this.$refs.bigChart.updateGradients(chartData);
-      this.bigLineChart.chartData = chartData;
-      this.bigLineChart.activeIndex = index;
+        gradientStops: [1, 0.4, 0],
+      },
     }
-  },
-  mounted() {
-    this.$rtl.enableRTL();
-    this.initBigChart(0);
   },
   computed: {
-    enableRTL () {
-      return this.$route.query.enableRTL;
+    enableRTL() {
+      return this.$route.query.enableRTL
     },
-    isRTL () {
-      return this.$rtl.isRTL;
+    isRTL() {
+      return this.$rtl.isRTL
     },
-    bigLineChartCategories () {
-      return [{ name: ' حسابات ', icon: 'tim-icons icon-single-02' }, {
-        name: ' المشتريات ',
-        icon: 'tim-icons icon-gift-2'
-      }, { name: ' جلسات ', icon: 'tim-icons icon-tap-02' }];
-    }
+    bigLineChartCategories() {
+      return [
+        { name: ' حسابات ', icon: 'tim-icons icon-single-02' },
+        {
+          name: ' المشتريات ',
+          icon: 'tim-icons icon-gift-2',
+        },
+        { name: ' جلسات ', icon: 'tim-icons icon-tap-02' },
+      ]
+    },
+  },
+  mounted() {
+    this.$rtl.enableRTL()
+    this.initBigChart(0)
   },
   beforeDestroy() {
     this.switchLocalePath('en')
-    this.$rtl.disableRTL();
-  }
-};
+    this.$rtl.disableRTL()
+  },
+  methods: {
+    initBigChart(index) {
+      const chartData = {
+        datasets: [
+          {
+            ...bigChartDatasetOptions,
+            data: bigChartData[index],
+          },
+        ],
+        labels: bigChartLabels,
+      }
+      this.$refs.bigChart.updateGradients(chartData)
+      this.bigLineChart.chartData = chartData
+      this.bigLineChart.activeIndex = index
+    },
+  },
+}
 </script>
 <style></style>

@@ -5,13 +5,13 @@
 </template>
 <script>
 export default {
-  name: 'breadcrumb',
+  name: 'Breadcrumb',
   props: {
     transparent: {
       type: Boolean,
-      default: true
-    }
-  }
-};
+      default: true,
+    },
+  },
+}
 </script>
 <style></style>

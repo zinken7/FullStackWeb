@@ -6,11 +6,11 @@
     <label :for="cbId" class="form-check-label">
       <input
         :id="cbId"
+        v-model="model"
         class="form-check-input"
         type="radio"
         :disabled="disabled"
         :value="name"
-        v-model="model"
       />
       <slot></slot> <span class="form-check-sign"></span>
     </label>
@@ -18,50 +18,50 @@
 </template>
 <script>
 export default {
-  name: 'base-radio',
+  name: 'BaseRadio',
   props: {
     name: {
       type: [String, Number],
-      description: 'Radio label'
+      description: 'Radio label',
+      default: '',
     },
     disabled: {
       type: Boolean,
-      description: 'Whether radio is disabled'
+      description: 'Whether radio is disabled',
     },
     value: {
       type: [String, Boolean],
-      description: 'Radio value'
+      description: 'Radio value',
+      default: '',
     },
     inline: {
       type: Boolean,
-      description: 'Whether radio is inline'
-    }
+      description: 'Whether radio is inline',
+    },
   },
   data() {
     return {
-      cbId: ''
-    };
+      cbId: '',
+    }
   },
   computed: {
     model: {
       get() {
-        return this.value;
+        return this.value
       },
       set(value) {
-        this.$emit('input', value);
-      }
+        this.$emit('input', value)
+      },
     },
     inlineClass() {
       if (this.inline) {
-        return `form-check-inline`;
+        return `form-check-inline`
       }
-      return '';
-    }
+      return ''
+    },
   },
   mounted() {
-    this.cbId = Math.random()
-      .toString(16)
-      .slice(2);
-  }
-};
+    this.cbId = Math.random().toString(16).slice(2)
+  },
+}
 </script>

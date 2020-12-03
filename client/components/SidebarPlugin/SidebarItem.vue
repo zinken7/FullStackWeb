@@ -12,20 +12,19 @@
       data-toggle="collapse"
       @click.prevent="collapseMenu"
     >
-      
     </a>
 
     <slot
-      name="title"
       v-if="children.length === 0 && !$slots.default && link.path"
+      name="title"
     >
       <component
-        :to="link.path"
-        @click.native="linkClick"
         :is="elementType(link, false)"
+        :to="link.path"
         :class="{ active: link.active }"
         :target="link.target"
         :href="link.path"
+        @click.native="linkClick"
       >
         <template v-if="addLink">
           <span class="sidebar-normal">{{ link.name }}</span>
@@ -39,19 +38,19 @@
   </component>
 </template>
 <script>
-import { CollapseTransition } from 'vue2-transitions';
+import { CollapseTransition } from 'vue2-transitions'
 
 export default {
-  name: 'sidebar-item',
+  name: 'SidebarItem',
   components: {
-    CollapseTransition
+    CollapseTransition,
   },
   props: {
     menu: {
       type: Boolean,
       default: false,
       description:
-        "Whether the item is a menu. Most of the item it's not used and should be used only if you want to override the default behavior."
+        "Whether the item is a menu. Most of the item it's not used and should be used only if you want to override the default behavior.",
     },
     link: {
       type: Object,
@@ -59,80 +58,102 @@ export default {
         return {
           name: '',
           path: '',
-          children: []
-        };
+          children: [],
+        }
       },
       description:
-        'Sidebar link. Can contain name, path, icon and other attributes. See examples for more info'
-    }
+        'Sidebar link. Can contain name, path, icon and other attributes. See examples for more info',
+    },
   },
   provide() {
     return {
       addLink: this.addChild,
-      removeLink: this.removeChild
-    };
+      removeLink: this.removeChild,
+    }
   },
   inject: {
     addLink: { default: null },
     removeLink: { default: null },
     autoClose: {
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
       children: [],
-      collapsed: true
-    };
+      collapsed: true,
+    }
   },
   computed: {
     baseComponent() {
-      return this.isMenu || this.link.isRoute ? 'li' : 'nuxt-link';
+      return this.isMenu || this.link.isRoute ? 'li' : 'nuxt-link'
     },
     linkPrefix() {
       if (this.link.name) {
-        let words = this.link.name.split(' ');
-        return words.map(word => word.substring(0, 1)).join('');
+        const words = this.link.name.split(' ')
+        return words.map((word) => word.substring(0, 1)).join('')
       }
+      return ''
     },
     isMenu() {
       if (!this.$slots.default) {
         return false
       }
-      return this.$slots.default.some(item => item.tag.endsWith('sidebar-item'))
+      return this.$slots.default.some((item) =>
+        item.tag.endsWith('sidebar-item')
+      )
     },
     isActive() {
       if (this.$route && this.$route.path) {
-        let matchingRoute = this.children.find(c =>
+        const matchingRoute = this.children.find((c) =>
           this.$route.path.startsWith(c.link.path)
-        );
+        )
         if (matchingRoute !== undefined) {
-          return true;
+          return true
         }
       }
-      return false;
+      return false
+    },
+  },
+  mounted() {
+    if (this.addLink) {
+      this.addLink(this)
+    }
+    if (this.link.collapsed !== undefined) {
+      this.collapsed = this.link.collapsed
+    }
+    if (this.isActive && this.isMenu) {
+      this.collapsed = false
+    }
+  },
+  destroyed() {
+    if (this.$el && this.$el.parentNode) {
+      this.$el.parentNode.removeChild(this.$el)
+    }
+    if (this.removeLink) {
+      this.removeLink(this)
     }
   },
   methods: {
     addChild(item) {
-      const index = this.$slots.default.indexOf(item.$vnode);
-      this.children.splice(index, 0, item);
+      const index = this.$slots.default.indexOf(item.$vnode)
+      this.children.splice(index, 0, item)
     },
     removeChild(item) {
-      const tabs = this.children;
-      const index = tabs.indexOf(item);
-      tabs.splice(index, 1);
+      const tabs = this.children
+      const index = tabs.indexOf(item)
+      tabs.splice(index, 1)
     },
     elementType(link, isParent = true) {
       if (link.isRoute === false) {
-        return isParent ? 'li' : 'a';
+        return isParent ? 'li' : 'a'
       } else {
-        return 'nuxt-link';
+        return 'nuxt-link'
       }
     },
     linkAbbreviation(name) {
-      const matches = name.match(/\b(\w)/g);
-      return matches.join('');
+      const matches = name.match(/\b(\w)/g)
+      return matches.join('')
     },
     linkClick() {
       if (
@@ -140,36 +161,17 @@ export default {
         this.$sidebar &&
         this.$sidebar.showSidebar === true
       ) {
-        this.$sidebar.displaySidebar(false);
+        this.$sidebar.displaySidebar(false)
       }
     },
     collapseMenu() {
-      this.collapsed = !this.collapsed;
+      this.collapsed = !this.collapsed
     },
     collapseSubMenu(link) {
-      link.collapsed = !link.collapsed;
-    }
+      link.collapsed = !link.collapsed
+    },
   },
-  mounted() {
-    if (this.addLink) {
-      this.addLink(this);
-    }
-    if (this.link.collapsed !== undefined) {
-      this.collapsed = this.link.collapsed;
-    }
-    if (this.isActive && this.isMenu) {
-      this.collapsed = false;
-    }
-  },
-  destroyed() {
-    if (this.$el && this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el);
-    }
-    if (this.removeLink) {
-      this.removeLink(this);
-    }
-  }
-};
+}
 </script>
 <style>
 .sidebar-menu-item {

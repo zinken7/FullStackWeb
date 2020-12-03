@@ -5,12 +5,12 @@
 
       <slot name="toggle-button">
         <button
-          class="navbar-toggler collapsed"
           v-if="hasMenu"
+          class="navbar-toggler collapsed"
           type="button"
-          @click="toggleMenu"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          @click="toggleMenu"
         >
           <span class="navbar-toggler-bar navbar-kebab"></span>
           <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -23,9 +23,9 @@
         @before-enter="onTransitionStart"
       >
         <div
+          v-show="show"
           class="collapse navbar-collapse show"
           :class="menuClasses"
-          v-show="show"
         >
           <slot></slot>
         </div>
@@ -34,38 +34,45 @@
   </nav>
 </template>
 <script>
-import { CollapseTransition } from 'vue2-transitions';
+import { CollapseTransition } from 'vue2-transitions'
 
 export default {
-  name: 'base-nav',
+  name: 'BaseNav',
+  components: {
+    CollapseTransition,
+  },
+  model: {
+    prop: 'show',
+    event: 'change',
+  },
   props: {
     show: {
       type: Boolean,
       default: false,
       description:
-        'Whether navbar menu is shown (valid for viewports < specified by `expand` prop)'
+        'Whether navbar menu is shown (valid for viewports < specified by `expand` prop)',
     },
     transparent: {
       type: Boolean,
       default: false,
-      description: 'Whether navbar is transparent'
+      description: 'Whether navbar is transparent',
     },
     expand: {
       type: String,
       default: 'lg',
-      description: 'Breakpoint where nav should expand'
+      description: 'Breakpoint where nav should expand',
     },
     menuClasses: {
       type: [String, Object, Array],
       default: '',
       description:
-        'Navbar menu (items) classes. Can be used to align menu items to the right/left'
+        'Navbar menu (items) classes. Can be used to align menu items to the right/left',
     },
     containerClasses: {
       type: [String, Object, Array],
       default: 'container-fluid',
       description:
-        'Container classes. Can be used to control container classes (contains both navbar brand and menu items)'
+        'Container classes. Can be used to control container classes (contains both navbar brand and menu items)',
     },
     type: {
       type: String,
@@ -79,58 +86,51 @@ export default {
           'white',
           'primary',
           'info',
-          'vue'
-        ].includes(value);
+          'vue',
+        ].includes(value)
       },
-      description: 'Navbar color type'
-    }
-  },
-  model: {
-    prop: 'show',
-    event: 'change'
-  },
-  components: {
-    CollapseTransition
+      description: 'Navbar color type',
+    },
   },
   data() {
     return {
-      transitionFinished: true
-    };
+      transitionFinished: true,
+    }
   },
   computed: {
     classes() {
-      let color = `bg-${this.type}`;
-      let classes = [
+      const color = `bg-${this.type}`
+      const classes = [
         { 'navbar-transparent': !this.show && this.transparent },
-        { [`navbar-expand-${this.expand}`]: this.expand }
-      ];
+        { [`navbar-expand-${this.expand}`]: this.expand },
+      ]
       if (this.position) {
-        classes.push(`navbar-${this.position}`);
+        classes.push(`navbar-${this.position}`)
       }
       if (
         !this.transparent ||
         (this.show && !this.transitionFinished) ||
         (!this.show && !this.transitionFinished)
       ) {
-        classes.push(color);
+        classes.push(color)
       }
-      return classes;
+      return classes
     },
     hasMenu() {
-      return this.$slots.default;
-    }
+      return this.$slots.default
+    },
   },
   methods: {
     toggleMenu() {
-      this.$emit('change', !this.show);
+      this.$emit('change', !this.show)
     },
     onTransitionStart() {
-      this.transitionFinished = false;
+      this.transitionFinished = false
     },
     onTransitionEnd() {
-      this.transitionFinished = true;
-    }
-  }
-};
+      this.transitionFinished = true
+    },
+  },
+}
 </script>
 <style></style>

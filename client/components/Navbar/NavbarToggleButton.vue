@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-  name: 'navbar-toggle-button'
-};
+  name: 'NavbarToggleButton',
+}
 </script>
 <style></style>

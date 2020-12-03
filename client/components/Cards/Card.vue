@@ -1,24 +1,24 @@
 <template>
   <div class="card" :class="[type && `card-${type}`]">
-    <div class="card-image" v-if="$slots.image"><slot name="image"></slot></div>
+    <div v-if="$slots.image" class="card-image"><slot name="image"></slot></div>
     <div
-      class="card-header"
       v-if="$slots.header || title"
+      class="card-header"
       :class="headerClasses"
     >
       <slot name="header">
         <h4 class="card-title">{{ title }}</h4>
-        <p class="card-category" v-if="subTitle">{{ subTitle }}</p>
+        <p v-if="subTitle" class="card-category">{{ subTitle }}</p>
       </slot>
     </div>
-    <div class="card-body" v-if="$slots.default" :class="bodyClasses">
+    <div v-if="$slots.default" class="card-body" :class="bodyClasses">
       <slot></slot>
     </div>
-    <div class="card-image" v-if="$slots['image-bottom']">
+    <div v-if="$slots['image-bottom']" class="card-image">
       <slot name="image-bottom"></slot>
     </div>
     <slot name="raw-content"></slot>
-    <div class="card-footer" :class="footerClasses" v-if="$slots.footer">
+    <div v-if="$slots.footer" class="card-footer" :class="footerClasses">
       <hr v-if="showFooterLine" />
       <slot name="footer"></slot>
     </div>
@@ -26,37 +26,43 @@
 </template>
 <script>
 export default {
-  name: 'card',
+  name: 'Card',
   props: {
     title: {
       type: String,
-      description: 'Card title'
+      description: 'Card title',
+      default: '',
     },
     subTitle: {
       type: String,
-      description: 'Card subtitle'
+      description: 'Card subtitle',
+      default: '',
     },
     type: {
       type: String,
-      description: 'Card type (e.g primary/danger etc)'
+      description: 'Card type (e.g primary/danger etc)',
+      default: '',
     },
     showFooterLine: {
       type: Boolean,
-      default: false
+      default: false,
     },
     headerClasses: {
       type: [String, Object, Array],
-      description: 'Card header css classes'
+      description: 'Card header css classes',
+      default: '',
     },
     bodyClasses: {
       type: [String, Object, Array],
-      description: 'Card body css classes'
+      description: 'Card body css classes',
+      default: '',
     },
     footerClasses: {
       type: [String, Object, Array],
-      description: 'Card footer css classes'
-    }
-  }
-};
+      description: 'Card footer css classes',
+      default: '',
+    },
+  },
+}
 </script>
 <style></style>

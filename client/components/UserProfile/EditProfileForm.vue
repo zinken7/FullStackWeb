@@ -5,29 +5,29 @@
       <div class="row">
         <div class="col-md-5">
           <base-input
+            v-model="user.company"
             type="text"
             label="Company"
             :disabled="true"
             placeholder="Company"
-            v-model="user.company"
           >
           </base-input>
         </div>
         <div class="col-md-3">
           <base-input
+            v-model="user.username"
             type="text"
             label="Username"
             placeholder="Username"
-            v-model="user.username"
           >
           </base-input>
         </div>
         <div class="col-md-4">
           <base-input
+            v-model="user.email"
             type="email"
             label="Email address"
             placeholder="mike@email.com"
-            v-model="user.email"
           >
           </base-input>
         </div>
@@ -36,19 +36,19 @@
       <div class="row">
         <div class="col-md-6">
           <base-input
+            v-model="user.firstName"
             type="text"
             label="First Name"
             placeholder="First Name"
-            v-model="user.firstName"
           >
           </base-input>
         </div>
         <div class="col-md-6">
           <base-input
+            v-model="user.lastName"
             type="text"
             label="Last Name"
             placeholder="Last Name"
-            v-model="user.lastName"
           >
           </base-input>
         </div>
@@ -57,10 +57,10 @@
       <div class="row">
         <div class="col-md-12">
           <base-input
+            v-model="user.address"
             type="text"
             label="Address"
             placeholder="Home Address"
-            v-model="user.address"
           >
           </base-input>
         </div>
@@ -69,27 +69,27 @@
       <div class="row">
         <div class="col-md-4">
           <base-input
+            v-model="user.city"
             type="text"
             label="City"
             placeholder="City"
-            v-model="user.city"
           >
           </base-input>
         </div>
         <div class="col-md-4">
           <base-input
+            v-model="user.country"
             type="text"
             label="Country"
             placeholder="Country"
-            v-model="user.country"
           >
           </base-input>
         </div>
         <div class="col-md-4">
           <base-input
+            v-model="user.postalCode"
             label="Postal Code"
             placeholder="ZIP Code"
-            v-model="user.postalCode"
           >
           </base-input>
         </div>
@@ -99,9 +99,9 @@
         <div class="col-md-12">
           <base-input label="About Me">
             <textarea
+              v-model="user.aboutMe"
               class="form-control"
               placeholder="ZIP Code"
-              v-model="user.aboutMe"
             >
             </textarea>
           </base-input>
@@ -128,15 +128,15 @@ export default {
         city: 'New York',
         country: 'USA',
         postalCode: '',
-        aboutMe: `Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.`
-      }
-    };
+        aboutMe: `Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.`,
+      },
+    }
   },
   methods: {
     updateProfile() {
-      alert('Your data: ' + JSON.stringify(this.user));
-    }
-  }
-};
+      alert('Your data: ' + JSON.stringify(this.user))
+    },
+  },
+}
 </script>
 <style></style>

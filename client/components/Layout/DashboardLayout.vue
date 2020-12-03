@@ -6,12 +6,12 @@
       :short-title="$t('sidebar.shortTitle')"
       :title="$t('sidebar.title')"
     >
-      <template slot-scope="props" slot="links">
+      <template slot="links" slot-scope="props">
         <sidebar-item
           :link="{
             name: $t('sidebar.dashboard'),
             icon: 'tim-icons icon-chart-pie-36',
-            path: '/dashboard'
+            path: '/dashboard',
           }"
         >
         </sidebar-item>
@@ -43,7 +43,7 @@
         <sidebar-item
           :link="{
             name: $t('sidebar.components'),
-            icon: 'tim-icons icon-molecule-40'
+            icon: 'tim-icons icon-molecule-40',
           }"
         >
           <sidebar-item :link="{ name: $t('sidebar.multiLevelCollapse') }">
@@ -52,7 +52,7 @@
                 name: $t('sidebar.example'),
                 isRoute: false,
                 path: 'https://google.com',
-                target: '_blank'
+                target: '_blank',
               }"
             ></sidebar-item>
           </sidebar-item>
@@ -63,7 +63,7 @@
           <sidebar-item
             :link="{
               name: $t('sidebar.gridSystem'),
-              path: '/components/grid-system'
+              path: '/components/grid-system',
             }"
           ></sidebar-item>
           <sidebar-item
@@ -72,13 +72,13 @@
           <sidebar-item
             :link="{
               name: $t('sidebar.sweetAlert'),
-              path: '/components/sweet-alert'
+              path: '/components/sweet-alert',
             }"
           ></sidebar-item>
           <sidebar-item
             :link="{
               name: $t('sidebar.notifications'),
-              path: '/components/notifications'
+              path: '/components/notifications',
             }"
           ></sidebar-item>
           <sidebar-item
@@ -87,7 +87,7 @@
           <sidebar-item
             :link="{
               name: $t('sidebar.typography'),
-              path: '/components/typography'
+              path: '/components/typography',
             }"
           ></sidebar-item>
         </sidebar-item>
@@ -100,13 +100,13 @@
           <sidebar-item
             :link="{
               name: $t('sidebar.extendedForms'),
-              path: '/forms/extended'
+              path: '/forms/extended',
             }"
           ></sidebar-item>
           <sidebar-item
             :link="{
               name: $t('sidebar.validationForms'),
-              path: '/forms/validation'
+              path: '/forms/validation',
             }"
           ></sidebar-item>
           <sidebar-item
@@ -116,25 +116,25 @@
         <sidebar-item
           :link="{
             name: $t('sidebar.tables'),
-            icon: 'tim-icons icon-puzzle-10'
+            icon: 'tim-icons icon-puzzle-10',
           }"
         >
           <sidebar-item
             :link="{
               name: $t('sidebar.regularTables'),
-              path: '/table-list/regular'
+              path: '/table-list/regular',
             }"
           ></sidebar-item>
           <sidebar-item
             :link="{
               name: $t('sidebar.extendedTables'),
-              path: '/table-list/extended'
+              path: '/table-list/extended',
             }"
           ></sidebar-item>
           <sidebar-item
             :link="{
               name: $t('sidebar.paginatedTables'),
-              path: '/table-list/paginated'
+              path: '/table-list/paginated',
             }"
           ></sidebar-item>
         </sidebar-item>
@@ -147,7 +147,7 @@
           <sidebar-item
             :link="{
               name: $t('sidebar.fullScreenMaps'),
-              path: '/maps/full-screen'
+              path: '/maps/full-screen',
             }"
           ></sidebar-item>
           <sidebar-item
@@ -158,21 +158,21 @@
           :link="{
             name: $t('sidebar.widgets'),
             icon: 'tim-icons icon-settings',
-            path: '/widgets'
+            path: '/widgets',
           }"
         ></sidebar-item>
         <sidebar-item
           :link="{
             name: $t('sidebar.charts'),
             icon: 'tim-icons icon-chart-bar-32',
-            path: '/charts'
+            path: '/charts',
           }"
         ></sidebar-item>
         <sidebar-item
           :link="{
             name: $t('sidebar.calendar'),
             icon: 'tim-icons icon-time-alarm',
-            path: '/calendar'
+            path: '/calendar',
           }"
         ></sidebar-item>
       </template>
@@ -198,68 +198,70 @@
 </template>
 <script>
 /* eslint-disable no-new */
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
-import SidebarShare from './SidebarSharePlugin';
+import PerfectScrollbar from 'perfect-scrollbar'
+import 'perfect-scrollbar/css/perfect-scrollbar.css'
+import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions'
+import SidebarShare from './SidebarSharePlugin'
+
+import DashboardNavbar from './DashboardNavbar.vue'
+import ContentFooter from './ContentFooter.vue'
+import DashboardContent from './Content.vue'
 function hasElement(className) {
-  return document.getElementsByClassName(className).length > 0;
+  return document.getElementsByClassName(className).length > 0
 }
 
 function initScrollbar(className) {
   if (hasElement(className)) {
-    new PerfectScrollbar(`.${className}`);
+    new PerfectScrollbar(`.${className}`)
   } else {
     // try to init it later in case this component is loaded async
     setTimeout(() => {
-      initScrollbar(className);
-    }, 100);
+      initScrollbar(className)
+    }, 100)
   }
 }
-
-import DashboardNavbar from './DashboardNavbar.vue';
-import ContentFooter from './ContentFooter.vue';
-import DashboardContent from './Content.vue';
-import { SlideYDownTransition, ZoomCenterTransition } from 'vue2-transitions';
 
 export default {
   components: {
     DashboardNavbar,
     ContentFooter,
+    // eslint-disable-next-line vue/no-unused-components
     DashboardContent,
+    // eslint-disable-next-line vue/no-unused-components
     SlideYDownTransition,
     ZoomCenterTransition,
-    SidebarShare
+    SidebarShare,
   },
   data() {
     return {
-      sidebarBackground: 'vue' //vue|blue|orange|green|red|primary
-    };
+      sidebarBackground: 'vue', // vue|blue|orange|green|red|primary
+    }
+  },
+  mounted() {
+    this.initScrollbar()
   },
   methods: {
     toggleSidebar() {
       if (this.$sidebar.showSidebar) {
-        this.$sidebar.displaySidebar(false);
+        this.$sidebar.displaySidebar(false)
       }
     },
     initScrollbar() {
-      let docClasses = document.body.classList;
-      let isWindows = navigator.platform.startsWith('Win');
+      const docClasses = document.body.classList
+      const isWindows = navigator.platform.startsWith('Win')
       if (isWindows) {
         // if we are on windows OS we activate the perfectScrollbar function
-        initScrollbar('sidebar');
-        initScrollbar('main-panel');
-        initScrollbar('sidebar-wrapper');
+        initScrollbar('sidebar')
+        initScrollbar('main-panel')
+        initScrollbar('sidebar-wrapper')
 
-        docClasses.add('perfect-scrollbar-on');
+        docClasses.add('perfect-scrollbar-on')
       } else {
-        docClasses.add('perfect-scrollbar-off');
+        docClasses.add('perfect-scrollbar-off')
       }
-    }
+    },
   },
-  mounted() {
-    this.initScrollbar();
-  }
-};
+}
 </script>
 <style lang="scss">
 $scaleSize: 0.95;

@@ -819,7 +819,7 @@
 </template>
 <script>
 export default {
-  name: 'icons'
-};
+  name: 'Icons',
+}
 </script>
 <style></style>
